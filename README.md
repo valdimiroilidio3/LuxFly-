@@ -143,8 +143,14 @@ projetos).
 npm run dev     # desenvolvimento
 npm run build   # build de produção
 npm run start   # servidor de produção
+npm run preview # instala + compila + serve em 0.0.0.0:3000 (recuperar pré-visualização)
 npm run lint    # ESLint
 ```
+
+> **Pré-visualização em branco ou erro 502?**
+> Significa que não há servidor a responder no porto 3000 — normalmente porque o
+> ambiente foi reiniciado e `node_modules` / `.next` foram descartados (não são
+> versionados). `npm run preview` repõe tudo num só comando.
 
 `scripts/process-images.mjs` regenera os assets: recorta o fundo da fotografia da
 hero (flood fill + feather do alfa) e converte as restantes para WebP.

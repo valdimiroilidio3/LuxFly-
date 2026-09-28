@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview": "npm ci --no-audit --no-fund && next build && next start -H 0.0.0.0 -p 3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
