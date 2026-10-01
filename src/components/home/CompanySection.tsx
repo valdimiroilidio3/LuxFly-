@@ -1,5 +1,6 @@
-import Image from "next/image";
 import { Reveal, MaskReveal, ImageReveal } from "@/components/motion/Reveal";
+import { ParallaxText } from "@/components/motion/ParallaxText";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
 
 const capabilities = ["Construção residencial", "Arquitetura contemporânea", "Gestão de projeto"];
 
@@ -14,11 +15,11 @@ export function CompanySection() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           {/* Número gigante */}
           <div className="col-span-12 md:col-span-2">
-            <Reveal>
+            <ParallaxText strength={26}>
               <span className="display numeral block text-[clamp(4rem,9vw,8.5rem)] leading-[0.8] text-ink/12">
                 01
               </span>
-            </Reveal>
+            </ParallaxText>
           </div>
 
           {/* Texto */}
@@ -63,13 +64,13 @@ export function CompanySection() {
 
           {/* Fotografia vertical */}
           <div className="col-span-12 md:col-span-4 md:col-start-9">
-            <ImageReveal className="relative aspect-[3/4.2] w-full overflow-hidden bg-bone-2">
-              <Image
+            <ImageReveal>
+              <ParallaxImage
                 src="/images/proj-norte.webp"
                 alt="Pormenor de fachada em betão aparente e madeira de uma moradia MODUS"
-                fill
                 sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover"
+                strength={12}
+                className="aspect-[3/4.2] w-full"
               />
             </ImageReveal>
             <Reveal delay={0.2}>

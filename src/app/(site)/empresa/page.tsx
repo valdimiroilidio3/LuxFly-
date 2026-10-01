@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal, ImageReveal } from "@/components/motion/Reveal";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import { StatsSection } from "@/components/home/StatsSection";
 import { DetailSection } from "@/components/home/DetailSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
@@ -78,13 +78,13 @@ export default async function EmpresaPage() {
             </Reveal>
           </div>
 
-          <ImageReveal className="relative col-span-12 aspect-[4/5] overflow-hidden bg-bone-2 md:col-span-6 md:col-start-7">
-            <Image
+          <ImageReveal className="col-span-12 md:col-span-6 md:col-start-7">
+            <ParallaxImage
               src="/images/proj-aurea.webp"
               alt="Moradia contemporânea construída pela MODUS em Lisboa"
-              fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
+              strength={12}
+              className="aspect-[4/5] w-full"
             />
           </ImageReveal>
         </div>

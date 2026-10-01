@@ -41,7 +41,8 @@ export default async function ProjetosPage() {
                 project={project}
                 index={i}
                 sizes="(min-width: 768px) 46vw, 100vw"
-                className={`${i % 2 === 1 ? "md:mt-[18%]" : ""} [&_a>div:first-child]:aspect-[4/3]`}
+                className={i % 2 === 1 ? "md:mt-[18%]" : ""}
+                frameClassName="aspect-[4/3]"
               />
             ))}
           </div>

@@ -154,3 +154,10 @@ npm run lint    # ESLint
 
 `scripts/process-images.mjs` regenera os assets: recorta o fundo da fotografia da
 hero (flood fill + feather do alfa) e converte as restantes para WebP.
+
+### Verificação de erros de runtime
+
+Sem browser disponível no ambiente, `npm run check:runtime` carrega cada rota
+num JSDOM com o bundle real a executar (com os globais de plataforma em falta
+preenchidos) e falha se houver `console.error`, exceções por apanhar ou avisos
+de hidratação. Requer o servidor a correr em `http://localhost:3000`.

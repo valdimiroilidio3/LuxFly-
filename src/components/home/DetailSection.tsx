@@ -9,8 +9,9 @@ export function DetailSection() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["-12%", "12%"]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], reduced ? [1, 1, 1] : [1.14, 1.06, 1.14]);
+  const y = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["-18%", "18%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["12%", "-12%"]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], reduced ? [1, 1, 1] : [1.22, 1.12, 1.22]);
 
   return (
     <section
@@ -33,7 +34,7 @@ export function DetailSection() {
         className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(10,10,10,0.75),transparent_55%)]"
       />
 
-      <div className="shell relative w-full py-[96px] md:py-[128px]">
+      <motion.div style={{ y: textY }} className="shell relative w-full py-[96px] will-change-transform md:py-[128px]">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -87,7 +88,7 @@ export function DetailSection() {
             )}
           </ul>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal, ImageReveal } from "@/components/motion/Reveal";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { getServices, getSettings } from "@/lib/db";
@@ -58,16 +58,13 @@ export default async function ServicosPage() {
                 )}
               </div>
 
-              <ImageReveal
-                delay={0.1}
-                className="relative col-span-12 aspect-[16/10] overflow-hidden bg-bone-2 md:col-span-6 md:col-start-7 md:aspect-[16/9]"
-              >
-                <Image
+              <ImageReveal delay={0.1} className="col-span-12 md:col-span-6 md:col-start-7">
+                <ParallaxImage
                   src={service.image}
                   alt={`${service.title} — obra MODUS`}
-                  fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
+                  strength={10}
+                  className="aspect-[16/10] w-full md:aspect-[16/9]"
                 />
               </ImageReveal>
             </Reveal>

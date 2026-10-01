@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal, ImageReveal } from "@/components/motion/Reveal";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { getProject, getProjects, getSettings } from "@/lib/db";
 import { site } from "@/lib/site";
@@ -85,14 +85,14 @@ export default async function ProjetoPage({ params }: Params) {
       </header>
 
       <section className="shell mt-16 md:mt-24">
-        <ImageReveal className="relative aspect-[16/9] w-full overflow-hidden bg-bone-2">
-          <Image
+        <ImageReveal>
+          <ParallaxImage
             src={project.cover}
             alt={`${project.title} — vista geral`}
-            fill
-            priority
             sizes="100vw"
-            className="object-cover"
+            strength={9}
+            priority
+            className="aspect-[16/9] w-full"
           />
         </ImageReveal>
       </section>
@@ -129,18 +129,14 @@ export default async function ProjetoPage({ params }: Params) {
             <ImageReveal
               key={src + i}
               delay={i * 0.06}
-              className={`relative overflow-hidden bg-bone-2 ${
-                i % 2 === 0
-                  ? "col-span-12 aspect-[16/10] md:col-span-8"
-                  : "col-span-12 aspect-[4/5] md:col-span-4 md:mt-16"
-              }`}
+              className={i % 2 === 0 ? "col-span-12 md:col-span-8" : "col-span-12 md:col-span-4 md:mt-16"}
             >
-              <Image
+              <ParallaxImage
                 src={src}
                 alt={`${project.title} — imagem ${i + 2}`}
-                fill
                 sizes="(min-width: 768px) 60vw, 100vw"
-                className="object-cover"
+                strength={11}
+                className={`w-full ${i % 2 === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`}
               />
             </ImageReveal>
           ))}

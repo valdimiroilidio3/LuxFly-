@@ -1,28 +1,41 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { EASE } from "@/components/motion/Reveal";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import type { Project } from "@/lib/types";
 
-/** Grelha editorial assimétrica — cada peça tem proporção e alinhamento próprios. */
-const spanStyles: Record<Project["span"], string> = {
-  wide: "md:col-span-8 md:col-start-1 aspect-[16/10]",
-  tall: "md:col-span-4 md:col-start-9 md:-mt-[18%] aspect-[3/4]",
-  regular: "md:col-span-5 md:col-start-2 md:mt-[6%] aspect-[4/3]",
-  offset: "md:col-span-6 md:col-start-7 md:mt-[14%] aspect-[5/4]",
+/**
+ * Grelha editorial assimétrica.
+ * `place` posiciona na grelha; `ratio` define a proporção da MOLDURA da imagem
+ * — nunca do artigo, para a metadata não transbordar da caixa.
+ */
+const place: Record<Project["span"], string> = {
+  wide: "md:col-span-8 md:col-start-1",
+  tall: "md:col-span-4 md:col-start-9 md:-mt-[16%]",
+  regular: "md:col-span-5 md:col-start-2 md:mt-[8%]",
+  offset: "md:col-span-6 md:col-start-7 md:mt-[14%]",
+};
+
+const ratio: Record<Project["span"], string> = {
+  wide: "aspect-[16/10]",
+  tall: "aspect-[3/4]",
+  regular: "aspect-[4/3]",
+  offset: "aspect-[5/4]",
 };
 
 export function ProjectCard({
   project,
   index,
   className = "",
+  frameClassName,
   sizes = "(min-width: 768px) 55vw, 100vw",
 }: {
   project: Project;
   index: number;
   className?: string;
+  frameClassName?: string;
   sizes?: string;
 }) {
   const reduced = useReducedMotion();
@@ -41,35 +54,26 @@ export function ProjectCard({
         className="group block"
         aria-label={`Ver projeto ${project.title}, ${project.category}, ${project.location}`}
       >
-        <div className="relative w-full overflow-hidden bg-bone-2">
-          <div className="relative h-full w-full overflow-hidden">
-            <Image
-              src={project.cover}
-              alt={`${project.title} — ${project.category} em ${project.location}`}
-              fill
-              sizes={sizes}
-              className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-            />
-          </div>
-
-          {/* overlay subtil */}
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-ink opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-[0.18]"
+        <div className="relative">
+          <ParallaxImage
+            src={project.cover}
+            alt={`${project.title} — ${project.category} em ${project.location}`}
+            sizes={sizes}
+            strength={8}
+            overlay
+            className={`w-full ${frameClassName ?? ratio[project.span] ?? ratio.regular}`}
+            imgClassName="transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
           />
 
-          {/* número do projeto */}
-          <span className="numeral absolute top-5 left-5 text-[12px] tracking-[0.14em] text-white/85 mix-blend-difference">
+          <span className="numeral pointer-events-none absolute top-5 left-5 z-10 text-[12px] tracking-[0.14em] text-white/85 mix-blend-difference">
             {project.index}
           </span>
 
-          {/* CTA em hover */}
-          <span className="pointer-events-none absolute right-5 bottom-5 translate-y-3 rounded-full bg-bone px-5 py-2.5 text-[12.5px] text-ink opacity-0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100">
+          <span className="pointer-events-none absolute right-5 bottom-5 z-10 translate-y-3 rounded-full bg-bone px-5 py-2.5 text-[12.5px] text-ink opacity-0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100">
             Ver projeto →
           </span>
         </div>
 
-        {/* metadata minimalista */}
         <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-[rgba(10,10,10,0.14)] pt-3.5">
           <h3 className="text-[17px] font-medium tracking-[-0.02em] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 md:text-[19px]">
             {project.title}
@@ -129,13 +133,13 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
           </motion.p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-16 md:mt-20 md:grid-cols-12 md:gap-y-4">
+        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-16 md:mt-20 md:grid-cols-12 md:gap-y-10">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
               project={project}
               index={i}
-              className={`${spanStyles[project.span] ?? spanStyles.regular} [&>a>div:first-child]:h-full`}
+              className={place[project.span] ?? place.regular}
               sizes={
                 project.span === "wide"
                   ? "(min-width: 768px) 66vw, 100vw"
