@@ -1,16 +1,13 @@
 import { Reveal, MaskReveal, ImageReveal } from "@/components/motion/Reveal";
 import { ParallaxText } from "@/components/motion/ParallaxText";
 import { ParallaxImage } from "@/components/motion/ParallaxImage";
+import { Section } from "@/components/site/Section";
 
 const capabilities = ["Construção residencial", "Arquitetura contemporânea", "Gestão de projeto"];
 
 export function CompanySection() {
   return (
-    <section
-      id="empresa"
-      aria-labelledby="empresa-title"
-      className="relative border-t border-[rgba(10,10,10,0.1)] py-[96px] md:py-[128px]"
-    >
+    <Section id="empresa" labelledBy="empresa-title">
       <div className="shell">
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           {/* Número gigante */}
@@ -82,6 +79,6 @@ export function CompanySection() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

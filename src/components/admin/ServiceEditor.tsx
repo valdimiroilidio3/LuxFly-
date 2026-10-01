@@ -110,7 +110,7 @@ export function ServiceRow({ service }: { service: Service }) {
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
+          className="pressable rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
         >
           {open ? "Fechar" : "Editar"}
         </button>
@@ -133,7 +133,7 @@ export function AddService() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-full rounded-2xl border border-dashed border-[rgba(10,10,10,0.22)] py-5 text-[13.5px] text-ink/55 transition-colors hover:border-ink hover:text-ink"
+        className="pressable w-full rounded-2xl border border-dashed border-[rgba(10,10,10,0.22)] py-5 text-[13.5px] text-ink/55 transition-colors hover:border-ink hover:text-ink"
       >
         + Adicionar serviço
       </button>

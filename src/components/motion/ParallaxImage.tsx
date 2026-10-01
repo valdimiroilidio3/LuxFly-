@@ -59,7 +59,7 @@ export function ParallaxImage({
       {overlay && (
         <div
           aria-hidden
-          className="absolute inset-0 bg-ink opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-[0.18]"
+          className="absolute inset-0 bg-ink opacity-0 transition-opacity duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-[0.18]"
         />
       )}
     </div>

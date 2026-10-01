@@ -68,7 +68,7 @@ export default async function AdminOrcamentos() {
                       id={`status-${q.id}`}
                       name="status"
                       defaultValue={q.status}
-                      className="rounded-full border border-[rgba(10,10,10,0.18)] bg-bone px-3.5 py-2 text-[12.5px] focus:border-ink focus:outline-none"
+                      className="pressable rounded-full border border-[rgba(10,10,10,0.18)] bg-bone px-3.5 py-2 text-[12.5px] focus:border-ink focus:outline-none"
                     >
                       {QUOTE_STATUSES.map((s) => (
                         <option key={s} value={s}>
@@ -78,7 +78,7 @@ export default async function AdminOrcamentos() {
                     </select>
                     <button
                       type="submit"
-                      className="rounded-full bg-ink px-4 py-2 text-[12.5px] text-bone transition-colors hover:bg-[#1f1f1f]"
+                      className="pressable rounded-full bg-ink px-4 py-2 text-[12.5px] text-bone transition-colors hover:bg-[#1f1f1f]"
                     >
                       Atualizar
                     </button>

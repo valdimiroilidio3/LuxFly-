@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { EASE } from "@/components/motion/Reveal";
+import { Section } from "@/components/site/Section";
 import type { Testimonial } from "@/lib/types";
 
 export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
@@ -14,14 +15,16 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
     setIndex((i) => (i + dir + testimonials.length) % testimonials.length);
 
   return (
-    <section
-      aria-labelledby="testemunhos-title"
-      className="border-t border-[rgba(10,10,10,0.1)] py-[96px] md:py-[128px]"
-    >
+    <Section labelledBy="testemunhos-title">
       <div className="shell">
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           <div className="col-span-12 lg:col-span-4">
-            <h2 id="testemunhos-title" className="display text-[clamp(2.2rem,5vw,4.2rem)]">
+            <p className="eyebrow mb-5 flex items-center gap-3 text-ink/40">
+              <span className="numeral">06</span>
+              <span aria-hidden className="h-px w-8 bg-current opacity-40" />
+              <span>Testemunhos</span>
+            </p>
+            <h2 id="testemunhos-title" className="title-xl">
               {["Quem constrói", "connosco."].map((line, i) => (
                 <span key={line} className="block overflow-hidden">
                   <motion.span
@@ -43,7 +46,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
                   type="button"
                   onClick={() => go(-1)}
                   aria-label="Testemunho anterior"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.2)] transition-colors duration-500 hover:bg-ink hover:text-bone"
+                  className="pressable flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.2)] transition-colors duration-[180ms] hover:bg-ink hover:text-bone"
                 >
                   <span aria-hidden>←</span>
                 </button>
@@ -51,7 +54,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
                   type="button"
                   onClick={() => go(1)}
                   aria-label="Testemunho seguinte"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.2)] transition-colors duration-500 hover:bg-ink hover:text-bone"
+                  className="pressable flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.2)] transition-colors duration-[180ms] hover:bg-ink hover:text-bone"
                 >
                   <span aria-hidden>→</span>
                 </button>
@@ -87,6 +90,6 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

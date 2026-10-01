@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { EASE } from "@/components/motion/Reveal";
+import { Section, SectionHeader } from "@/components/site/Section";
 import { processSteps } from "@/lib/seed";
 
 export function ProcessSection() {
@@ -12,32 +13,20 @@ export function ProcessSection() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section
-      id="processo"
-      aria-labelledby="processo-title"
-      className="relative border-t border-[rgba(10,10,10,0.1)] bg-bone-2 py-[96px] md:py-[128px]"
-    >
+    <Section id="processo" labelledBy="processo-title" tone="bone-2">
       <div className="shell">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <h2 id="processo-title" className="display max-w-[16ch] text-[clamp(2.4rem,6.4vw,5.6rem)]">
-            {["Do primeiro traço", "à última entrega."].map((line, i) => (
-              <span key={line} className="block overflow-hidden">
-                <motion.span
-                  className="block"
-                  initial={{ y: "110%" }}
-                  whileInView={{ y: "0%" }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 1.1, delay: i * 0.08, ease: EASE }}
-                >
-                  {line}
-                </motion.span>
-              </span>
-            ))}
-          </h2>
-          <p className="max-w-[32ch] pb-2 text-[15px] leading-relaxed text-ink/60 md:text-right">
-            Um método com etapas claras — sabe sempre em que ponto está a sua obra.
-          </p>
-        </div>
+        <SectionHeader
+          index="04"
+          eyebrow="Processo"
+          titleId="processo-title"
+          title={
+            <>
+              Do primeiro traço
+              <br />à última entrega.
+            </>
+          }
+          lede="Um método com etapas claras — sabe sempre em que ponto está a sua obra."
+        />
 
         <div ref={ref} className="relative mt-16 md:mt-24">
           {/* linha horizontal (desktop) */}
@@ -73,12 +62,12 @@ export function ProcessSection() {
               >
                 <span
                   aria-hidden
-                  className="absolute top-2.5 left-0 h-[15px] w-[15px] rounded-full border border-ink/25 bg-bone-2 transition-colors duration-500 group-hover:bg-ink lg:top-[71px] lg:left-0"
+                  className="absolute top-2.5 left-0 h-[15px] w-[15px] rounded-full border border-ink/25 bg-bone-2 transition-colors duration-[180ms] group-hover:bg-ink lg:top-[71px] lg:left-0"
                 >
-                  <span className="absolute inset-[4px] rounded-full bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-0" />
+                  <span className="absolute inset-[4px] rounded-full bg-ink transition-[transform,opacity] duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:scale-[0.3] hoverable:group-hover:opacity-0" />
                 </span>
 
-                <span className="numeral display block text-[clamp(2.6rem,4.4vw,4rem)] leading-[0.8] text-ink/15 transition-colors duration-700 group-hover:text-ink/45">
+                <span className="numeral display block text-[clamp(2.6rem,4.4vw,4rem)] leading-[0.8] text-ink/15 transition-colors duration-[180ms] group-hover:text-ink/45">
                   {step.index}
                 </span>
                 <h3 className="mt-4 text-[15px] font-semibold tracking-[0.06em] uppercase lg:mt-[42px]">
@@ -92,6 +81,6 @@ export function ProcessSection() {
           </ol>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

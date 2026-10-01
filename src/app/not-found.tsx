@@ -13,13 +13,13 @@ export default function NotFound() {
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
             href="/"
-            className="group inline-flex min-w-[200px] items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f]"
+            className="pressable group inline-flex min-w-[200px] items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f]"
           >
             Voltar ao início <span aria-hidden>→</span>
           </Link>
           <Link
             href="/projetos"
-            className="group inline-flex min-w-[200px] items-center justify-between rounded-full border border-[rgba(10,10,10,0.28)] px-6 py-3.5 text-[13px] transition-colors hover:bg-ink hover:text-bone"
+            className="pressable group inline-flex min-w-[200px] items-center justify-between rounded-full border border-[rgba(10,10,10,0.28)] px-6 py-3.5 text-[13px] transition-colors hover:bg-ink hover:text-bone"
           >
             Ver projetos <span aria-hidden>→</span>
           </Link>

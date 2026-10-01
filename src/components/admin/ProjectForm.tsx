@@ -115,7 +115,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                 type="button"
                 onClick={() => setCover(src)}
                 aria-label={`Usar imagem ${src}`}
-                className={`relative aspect-square overflow-hidden rounded-md border transition-colors ${
+                className={`pressable relative aspect-square overflow-hidden rounded-md border transition-colors ${
                   cover === src ? "border-ink" : "border-transparent hover:border-ink/30"
                 }`}
               >

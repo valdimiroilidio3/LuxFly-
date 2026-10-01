@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { EASE } from "@/components/motion/Reveal";
+import { Section, SectionHeader } from "@/components/site/Section";
 import type { Stat } from "@/lib/types";
 
 function Counter({ value, prefix, suffix }: { value: number; prefix: string; suffix: string }) {
@@ -43,29 +44,21 @@ export function StatsSection({ stats }: { stats: Stat[] }) {
   if (!stats.length) return null;
 
   return (
-    <section
-      aria-labelledby="numeros-title"
-      className="border-t border-[rgba(10,10,10,0.1)] py-[96px] md:py-[128px]"
-    >
+    <Section labelledBy="numeros-title">
       <div className="shell">
-        <h2
-          id="numeros-title"
-          className="display max-w-[18ch] text-[clamp(2.2rem,5.4vw,4.6rem)]"
-        >
-          {["Experiência que se mede", "em detalhes."].map((line, i) => (
-            <span key={line} className="block overflow-hidden">
-              <motion.span
-                className="block"
-                initial={{ y: "110%" }}
-                whileInView={{ y: "0%" }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 1.1, delay: i * 0.08, ease: EASE }}
-              >
-                {line}
-              </motion.span>
-            </span>
-          ))}
-        </h2>
+        <SectionHeader
+          index="05"
+          eyebrow="Números"
+          titleId="numeros-title"
+          title={
+            <>
+              Experiência que se mede
+              <br />
+              em detalhes.
+            </>
+          }
+          lede="Obras entregues, equipas fixas e um histórico de prazos cumpridos."
+        />
 
         <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 md:mt-24 lg:grid-cols-4">
           {stats.map((stat, i) => (
@@ -88,6 +81,6 @@ export function StatsSection({ stats }: { stats: Stat[] }) {
           ))}
         </dl>
       </div>
-    </section>
+    </Section>
   );
 }

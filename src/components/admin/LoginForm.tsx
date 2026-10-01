@@ -36,7 +36,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f] disabled:opacity-60"
+        className="pressable inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f] disabled:opacity-60"
       >
         {pending ? "A validar…" : "Entrar"}
         <span aria-hidden>→</span>

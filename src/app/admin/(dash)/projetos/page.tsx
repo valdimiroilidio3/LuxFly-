@@ -15,7 +15,7 @@ export default async function AdminProjetos() {
         action={
           <Link
             href="/admin/projetos/novo"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f]"
+            className="pressable inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[13px] text-bone transition-colors hover:bg-[#1f1f1f]"
           >
             Adicionar projeto <span aria-hidden>+</span>
           </Link>
@@ -27,7 +27,7 @@ export default async function AdminProjetos() {
           title="Sem projetos"
           description="Ainda não existe nenhum projeto. Crie o primeiro para o publicar no portfólio."
           action={
-            <Link href="/admin/projetos/novo" className="rounded-full bg-ink px-5 py-2.5 text-[13px] text-bone">
+            <Link href="/admin/projetos/novo" className="pressable rounded-full bg-ink px-5 py-2.5 text-[13px] text-bone">
               Adicionar projeto
             </Link>
           }
@@ -69,7 +69,7 @@ export default async function AdminProjetos() {
                 <Link
                   href={`/projetos/${p.slug}`}
                   target="_blank"
-                  className="rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
+                  className="pressable rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
                 >
                   Ver
                 </Link>
@@ -77,14 +77,14 @@ export default async function AdminProjetos() {
                   <input type="hidden" name="id" value={p.id} />
                   <button
                     type="submit"
-                    className="rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
+                    className="pressable rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/65 transition-colors hover:border-ink hover:text-ink"
                   >
                     {p.published ? "Despublicar" : "Publicar"}
                   </button>
                 </form>
                 <Link
                   href={`/admin/projetos/${p.id}`}
-                  className="rounded-full bg-ink px-4 py-2 text-[12.5px] text-bone transition-colors hover:bg-[#1f1f1f]"
+                  className="pressable rounded-full bg-ink px-4 py-2 text-[12.5px] text-bone transition-colors hover:bg-[#1f1f1f]"
                 >
                   Editar
                 </Link>

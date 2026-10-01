@@ -178,12 +178,12 @@ export function Hero() {
             <Link
               href="/projetos"
               data-cursor="hover"
-              className="group mt-7 inline-flex w-[240px] items-center justify-between rounded-full border border-[rgba(10,10,10,0.28)] px-6 py-3.5 text-[13px] text-ink transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-ink hover:bg-ink hover:text-bone"
+              className="pressable group mt-7 inline-flex w-[240px] items-center justify-between rounded-full border border-[rgba(10,10,10,0.28)] px-6 py-3.5 text-[13px] text-ink transition-colors duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-ink hover:bg-ink hover:text-bone"
             >
               Ver projetos
               <span
                 aria-hidden
-                className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                className="transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:translate-x-1"
               >
                 →
               </span>
@@ -219,12 +219,12 @@ export function Hero() {
             <Link
               href="/contacto"
               data-cursor="hover"
-              className="group mt-6 inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#1f1f1f]"
+              className="pressable group mt-6 inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-3.5 text-[13px] text-bone transition-colors duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#1f1f1f]"
             >
               Solicitar agora
               <span
                 aria-hidden
-                className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                className="transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:translate-x-1"
               >
                 →
               </span>

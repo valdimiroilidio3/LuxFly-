@@ -213,12 +213,12 @@ export function QuoteForm() {
             type="submit"
             disabled={pending}
             data-cursor="hover"
-            className="group inline-flex min-w-[230px] items-center justify-between rounded-full bg-ink px-7 py-4 text-[13px] text-bone transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#1f1f1f] disabled:cursor-wait disabled:opacity-60"
+            className="pressable group inline-flex min-w-[230px] items-center justify-between rounded-full bg-ink px-7 py-4 text-[13px] text-bone transition-[transform,opacity] duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#1f1f1f] disabled:cursor-wait disabled:opacity-60"
           >
             {pending ? "A enviar…" : "Enviar pedido"}
             <span
               aria-hidden
-              className={`transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${pending ? "animate-pulse" : "group-hover:translate-x-1.5"}`}
+              className={`transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${pending ? "animate-pulse" : "hoverable:group-hover:translate-x-1.5"}`}
             >
               →
             </span>

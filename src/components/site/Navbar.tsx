@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, type PanInfo } from "motion/react";
 import { site } from "@/lib/site";
-import { EASE } from "@/components/motion/Reveal";
+import { EASE, SPRING, SPRING_SHEET } from "@/components/motion/Reveal";
+
+/**
+ * Projeção de momento da Apple (Designing Fluid Interfaces).
+ * Dá o ponto onde o gesto *iria* parar, em vez de usar só a posição de largada.
+ */
+function project(velocity: number, decelerationRate = 0.998) {
+  return ((velocity / 1000) * decelerationRate) / (1 - decelerationRate);
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,13 +38,26 @@ export function Navbar() {
     };
   }, [open]);
 
+  // Fechar com Escape — ação de teclado, por isso sem animação de abertura.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  /** Largar o painel: decide pelo destino projetado, não pela distância. */
+  const onDragEnd = (_: unknown, info: PanInfo) => {
+    const projected = info.offset.y + project(info.velocity.y);
+    if (projected < -120) setOpen(false);
+  };
+
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[90] transition-[background-color,backdrop-filter,border-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          scrolled || open
-            ? "border-b border-[rgba(10,10,10,0.08)] bg-[rgba(245,242,236,0.82)] backdrop-blur-[20px]"
-            : "border-b border-transparent bg-transparent"
+        data-scrolled={scrolled || open}
+        className={`scroll-edge fixed inset-x-0 top-0 z-[90] transition-[background-color,backdrop-filter] duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${
+          scrolled || open ? "material-chrome" : "bg-transparent"
         }`}
       >
         <nav
@@ -45,18 +66,18 @@ export function Navbar() {
         >
           {/* LEFT — marca */}
           <motion.div
-            initial={reduced ? false : { opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { opacity: 0, transform: "translateY(-8px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
             transition={{ duration: 0.8, ease: EASE }}
           >
             <Link
               href="/"
-              className="group flex items-center gap-2.5"
+              className="pressable group flex items-center gap-2.5"
               aria-label="MODUS — página inicial"
             >
               <span
                 aria-hidden
-                className="relative block h-3.5 w-3.5 border border-ink transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-45"
+                className="relative block h-3.5 w-3.5 border border-ink transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:rotate-45"
               >
                 <span className="absolute inset-[3px] bg-ink" />
               </span>
@@ -79,14 +100,14 @@ export function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="group relative block py-1 text-[13px] text-ink/80 transition-colors duration-300 hover:text-ink"
+                    className="group relative block py-1 text-[13px] text-ink/80 transition-colors duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-ink"
                     aria-current={active ? "page" : undefined}
                   >
                     {item.label}
                     <span
                       aria-hidden
-                      className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-ink transition-transform duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                        active ? "scale-x-100" : "scale-x-0 hoverable:group-hover:scale-x-100"
                       }`}
                     />
                   </Link>
@@ -97,8 +118,8 @@ export function Navbar() {
 
           {/* RIGHT — indicadores + CTA */}
           <motion.div
-            initial={reduced ? false : { opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { opacity: 0, transform: "translateY(-8px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
             transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
             className="flex items-center gap-4"
           >
@@ -113,9 +134,12 @@ export function Navbar() {
             </span>
             <Link
               href="/contacto"
-              className="hidden items-center gap-2.5 rounded-full border border-ink/25 px-5 py-2.5 text-[12.5px] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-ink hover:bg-ink hover:text-bone md:inline-flex"
+              className="pressable hidden items-center gap-2.5 rounded-full border border-ink/25 px-5 py-2.5 text-[12.5px] hover:border-ink hover:bg-ink hover:text-bone md:inline-flex"
             >
-              Falar com a equipa <span aria-hidden>→</span>
+              Falar com a equipa{" "}
+              <span aria-hidden className="arrow">
+                →
+              </span>
             </Link>
 
             <button
@@ -124,46 +148,52 @@ export function Navbar() {
               aria-expanded={open}
               aria-controls="menu-mobile"
               aria-label={open ? "Fechar menu" : "Abrir menu"}
-              className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
+              className="pressable flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
             >
               <span
                 aria-hidden
-                className={`block h-px w-5 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${open ? "translate-y-[3px] rotate-45" : ""}`}
+                className={`block h-px w-5 bg-ink transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${open ? "translate-y-[3px] rotate-45" : ""}`}
               />
               <span
                 aria-hidden
-                className={`block h-px w-5 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
+                className={`block h-px w-5 bg-ink transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
               />
             </button>
           </motion.div>
         </nav>
       </header>
 
-      {/* Menu mobile */}
+      {/* Painel móvel — entra e sai pelo mesmo caminho (consistência espacial)
+          e pode ser arrastado para cima para fechar. */}
       <AnimatePresence>
         {open && (
           <motion.div
             id="menu-mobile"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: EASE }}
-            className="fixed inset-0 z-[85] bg-bone/95 pt-24 backdrop-blur-xl lg:hidden"
+            initial={reduced ? { opacity: 0 } : { opacity: 0, transform: "translateY(-16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
+            exit={reduced ? { opacity: 0 } : { opacity: 0, transform: "translateY(-16px)" }}
+            transition={reduced ? { duration: 0.2 } : SPRING_SHEET}
+            drag={reduced ? false : "y"}
+            dragDirectionLock
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0.35, bottom: 0.02 }}
+            onDragEnd={onDragEnd}
+            className="material-chrome fixed inset-0 z-[85] touch-pan-y pt-24 lg:hidden"
           >
             <nav className="shell flex h-full flex-col justify-between pb-12">
               <ul className="flex flex-col">
                 {site.nav.map((item, i) => (
                   <motion.li
                     key={item.href}
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.06 * i, ease: EASE }}
+                    initial={{ opacity: 0, transform: "translateY(12px)" }}
+                    animate={{ opacity: 1, transform: "translateY(0px)" }}
+                    transition={{ ...SPRING, delay: 0.04 * i }}
                     className="border-b border-[rgba(10,10,10,0.1)]"
                   >
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="display block py-5 text-[clamp(2rem,9vw,3rem)] leading-none"
+                      className="pressable display block py-5 text-[clamp(2rem,9vw,3rem)] leading-none"
                     >
                       {item.label}
                     </Link>
@@ -178,11 +208,17 @@ export function Navbar() {
                 <Link
                   href="/contacto"
                   onClick={() => setOpen(false)}
-                  className="mt-3 inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-4 text-bone"
+                  className="pressable mt-3 inline-flex w-full items-center justify-between rounded-full bg-ink px-6 py-4 text-bone"
                 >
-                  Falar com a equipa <span aria-hidden>→</span>
+                  Falar com a equipa{" "}
+                  <span aria-hidden className="arrow">
+                    →
+                  </span>
                 </Link>
               </div>
+              <span aria-hidden className="mt-6 text-center text-[11px] text-ink/30">
+                Arraste para cima para fechar
+              </span>
             </nav>
           </motion.div>
         )}

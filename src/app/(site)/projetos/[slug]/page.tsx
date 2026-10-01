@@ -148,10 +148,10 @@ export default async function ProjetoPage({ params }: Params) {
           <Link href={`/projetos/${next.slug}`} data-cursor="hover" className="group block">
             <p className="eyebrow text-ink/40">Projeto seguinte</p>
             <div className="mt-5 flex items-end justify-between gap-6">
-              <h2 className="display text-[clamp(2rem,6vw,4.5rem)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+              <h2 className="display text-[clamp(2rem,6vw,4.5rem)] transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:translate-x-2">
                 {next.title}
               </h2>
-              <span aria-hidden className="pb-3 text-[22px] transition-transform duration-700 group-hover:translate-x-2">
+              <span aria-hidden className="pb-3 text-[22px] transition-transform duration-[220ms] hoverable:group-hover:translate-x-2">
                 →
               </span>
             </div>

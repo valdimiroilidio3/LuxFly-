@@ -48,7 +48,7 @@ export function AdminNav({ logout }: { logout: () => Promise<void> }) {
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] transition-colors duration-300 ${
+                  className={`pressable flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] transition-colors duration-300 ${
                     active ? "bg-white/12 text-white" : "text-white/55 hover:bg-white/6 hover:text-white"
                   }`}
                 >
@@ -65,7 +65,7 @@ export function AdminNav({ logout }: { logout: () => Promise<void> }) {
         <Link
           href="/"
           target="_blank"
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-white/55 transition-colors hover:text-white"
+          className="pressable flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-white/55 transition-colors hover:text-white"
         >
           <ExternalLink size={15} strokeWidth={1.6} aria-hidden />
           Ver o site
@@ -73,7 +73,7 @@ export function AdminNav({ logout }: { logout: () => Promise<void> }) {
         <form action={logout}>
           <button
             type="submit"
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-white/55 transition-colors hover:text-white"
+            className="pressable flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-white/55 transition-colors hover:text-white"
           >
             <LogOut size={15} strokeWidth={1.6} aria-hidden />
             Terminar sessão

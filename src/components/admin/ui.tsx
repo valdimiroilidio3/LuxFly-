@@ -43,7 +43,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={pending}
-      className={`inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[13px] transition-colors duration-300 disabled:cursor-wait disabled:opacity-60 ${styles}`}
+      className={`pressable inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[13px] transition-colors duration-300 disabled:cursor-wait disabled:opacity-60 ${styles}`}
     >
       {pending ? pendingLabel : children}
     </button>
@@ -65,7 +65,7 @@ export function ConfirmButton({
       onClick={(e) => {
         if (!window.confirm(message)) e.preventDefault();
       }}
-      className="rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/60 transition-colors duration-300 hover:border-[#b23b2e] hover:bg-[#b23b2e] hover:text-white disabled:opacity-50"
+      className="pressable rounded-full border border-[rgba(10,10,10,0.18)] px-4 py-2 text-[12.5px] text-ink/60 transition-colors duration-300 hover:border-[#b23b2e] hover:bg-[#b23b2e] hover:text-white disabled:opacity-50"
     >
       {pending ? "A eliminar…" : children}
     </button>

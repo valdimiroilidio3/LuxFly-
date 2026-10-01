@@ -67,7 +67,7 @@ export function AddStat() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-full rounded-2xl border border-dashed border-[rgba(10,10,10,0.22)] py-5 text-[13.5px] text-ink/55 transition-colors hover:border-ink hover:text-ink"
+        className="pressable w-full rounded-2xl border border-dashed border-[rgba(10,10,10,0.22)] py-5 text-[13.5px] text-ink/55 transition-colors hover:border-ink hover:text-ink"
       >
         + Adicionar indicador
       </button>

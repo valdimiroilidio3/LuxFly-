@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { EASE } from "@/components/motion/Reveal";
+import { Section, SectionHeader } from "@/components/site/Section";
 import type { Service } from "@/lib/types";
 
 /**
@@ -30,28 +31,15 @@ export function ServicesSection({ services }: { services: Service[] }) {
   };
 
   return (
-    <section
-      id="servicos"
-      aria-labelledby="servicos-title"
-      className="relative border-t border-[rgba(10,10,10,0.1)] py-[96px] md:py-[128px]"
-    >
+    <Section id="servicos" labelledBy="servicos-title">
       <div className="shell">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <h2 id="servicos-title" className="display text-[clamp(2.6rem,8vw,7rem)]">
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 1, ease: EASE }}
-            >
-              O que fazemos.
-            </motion.span>
-          </h2>
-          <p className="max-w-[32ch] pb-2 text-[15px] leading-relaxed text-ink/60 md:text-right">
-            Seis áreas, uma equipa. Do primeiro esboço à manutenção depois da entrega.
-          </p>
-        </div>
+        <SectionHeader
+          index="03"
+          eyebrow="Serviços"
+          titleId="servicos-title"
+          title="O que fazemos."
+          lede="Seis áreas, uma equipa. Do primeiro esboço à manutenção depois da entrega."
+        />
 
         <div
           ref={containerRef}
@@ -73,12 +61,12 @@ export function ServicesSection({ services }: { services: Service[] }) {
                 <Link
                   href="/servicos"
                   data-cursor="hover"
-                  className="grid grid-cols-12 items-center gap-4 py-6 transition-[padding,color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:py-7 md:group-hover:py-11"
+                  className="grid grid-cols-12 items-center gap-4 py-6 transition-[padding,color] duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] md:py-7 md:group-hover:py-11"
                 >
                   <span className="numeral col-span-2 text-[12px] tracking-[0.14em] text-ink/35 md:col-span-1">
                     {service.index}
                   </span>
-                  <h3 className="col-span-10 text-[clamp(1.5rem,3.4vw,2.6rem)] leading-none font-semibold tracking-[-0.04em] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:col-span-4 md:group-hover:translate-x-3">
+                  <h3 className="col-span-10 text-[clamp(1.5rem,3.4vw,2.6rem)] leading-none font-semibold tracking-[-0.04em] transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] md:col-span-4 md:hoverable:group-hover:translate-x-3">
                     {service.title}
                   </h3>
                   <p className="col-span-11 col-start-3 text-[14px] leading-relaxed text-ink/55 md:col-span-5 md:col-start-auto">
@@ -86,7 +74,7 @@ export function ServicesSection({ services }: { services: Service[] }) {
                   </p>
                   <span
                     aria-hidden
-                    className="col-span-1 hidden justify-self-end text-ink/30 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:text-ink md:col-span-2 md:block"
+                    className="col-span-1 hidden justify-self-end text-ink/30 transition-[transform,opacity] duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] hoverable:group-hover:translate-x-1 group-hover:text-ink md:col-span-2 md:block"
                   >
                     →
                   </span>
@@ -126,6 +114,6 @@ export function ServicesSection({ services }: { services: Service[] }) {
           )}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

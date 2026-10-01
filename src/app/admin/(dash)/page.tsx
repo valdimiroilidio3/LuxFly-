@@ -99,7 +99,7 @@ export default async function AdminDashboard() {
           </p>
           <Link
             href="/admin/projetos"
-            className="mt-5 inline-flex rounded-full border border-[rgba(10,10,10,0.25)] px-4 py-2 text-[12.5px] transition-colors hover:bg-ink hover:text-bone"
+            className="pressable mt-5 inline-flex rounded-full border border-[rgba(10,10,10,0.25)] px-4 py-2 text-[12.5px] transition-colors hover:bg-ink hover:text-bone"
           >
             Gerir projetos →
           </Link>
@@ -112,7 +112,7 @@ export default async function AdminDashboard() {
           </p>
           <Link
             href="/admin/orcamentos"
-            className="mt-5 inline-flex rounded-full border border-[rgba(10,10,10,0.25)] px-4 py-2 text-[12.5px] transition-colors hover:bg-ink hover:text-bone"
+            className="pressable mt-5 inline-flex rounded-full border border-[rgba(10,10,10,0.25)] px-4 py-2 text-[12.5px] transition-colors hover:bg-ink hover:text-bone"
           >
             Abrir caixa de entrada →
           </Link>

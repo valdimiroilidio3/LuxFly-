@@ -2,7 +2,16 @@
 
 /* ============================================================
    MODUS — Design System
+   Motion tokens segundo a filosofia de Emil Kowalski;
+   materiais, profundidade e tipografia segundo as talks de design da Apple.
    ============================================================ */
+
+/* Movimento só onde o ponteiro é fino: em touch o tap dispara hover. */
+@custom-variant hoverable {
+  @media (hover: hover) and (pointer: fine) {
+    @slot;
+  }
+}
 
 @theme {
   --color-bone: #f3f0e9;
@@ -30,23 +39,39 @@
   --spacing-16: 128px;
   --spacing-20: 160px;
 
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ---------- Curvas ----------
+     As curvas nativas do CSS são fracas de mais para movimento deliberado. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entradas e saídas */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* movimento no ecrã */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* gavetas, estilo iOS */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* revelações editoriais */
+
+  /* ---------- Durações ----------
+     UI abaixo de 300 ms. Revelações de scroll podem ser mais longas. */
+  --dur-press: 120ms;
+  --dur-hover: 180ms;
+  --dur-pop: 220ms;
+  --dur-sheet: 320ms;
+  --dur-reveal: 900ms;
 }
 
 :root {
   --shell-x: 24px;
+  --nav-h: 64px;
   color-scheme: light;
 }
 
 @media (min-width: 768px) {
   :root {
     --shell-x: 32px;
+    --nav-h: 76px;
   }
 }
 
 @media (min-width: 1200px) {
   :root {
     --shell-x: 56px;
+    --nav-h: 84px;
   }
 }
 
@@ -83,22 +108,66 @@ body {
   max-width: 1680px;
 }
 
-/* ---------- Type primitives ---------- */
-.display {
-  font-family: var(--font-display);
-  font-weight: 900;
-  line-height: 0.82;
-  letter-spacing: -0.055em;
-  text-transform: uppercase;
-}
-
+/* ============================================================
+   Tipografia — o tracking é específico do tamanho, nunca um valor único.
+   Texto grande quer tracking negativo; texto pequeno quer ligeiramente
+   positivo. O leading é inverso ao tamanho.
+   ============================================================ */
 .display-hero {
   font-weight: 900;
   line-height: 0.78;
   letter-spacing: -0.075em;
   text-transform: uppercase;
+  font-optical-sizing: auto;
 }
 
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  font-optical-sizing: auto;
+}
+
+/* Títulos de secção: grandes, mas não display — tracking mais aberto. */
+.title-xl {
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.4vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.title-lg {
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+}
+
+.title-md {
+  font-weight: 500;
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+/* Corpo: tracking em zero, leading confortável. */
+.body-lg {
+  font-size: clamp(1rem, 1.15vw, 1.1875rem);
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+  color: var(--color-muted);
+}
+
+.body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--color-muted);
+}
+
+/* Texto pequeno: tracking positivo para legibilidade. */
 .eyebrow {
   font-size: 11px;
   font-weight: 500;
@@ -109,6 +178,109 @@ body {
 .numeral {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+}
+
+/* ============================================================
+   Elementos pressionáveis — o feedback vive no pointer-down.
+   ============================================================ */
+.pressable {
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    background-color var(--dur-hover) ease,
+    border-color var(--dur-hover) ease,
+    color var(--dur-hover) ease;
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
+/* Pílulas: variante clara (contorno) e sólida. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  border-radius: 9999px;
+  padding: 0.875rem 1.5rem;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.pill-outline {
+  border: 1px solid rgba(10, 10, 10, 0.28);
+  color: var(--color-ink);
+}
+
+.pill-outline:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.pill-solid {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.pill-solid:hover {
+  background: #262626;
+}
+
+/* A seta só se move onde há ponteiro fino. */
+.arrow {
+  display: inline-block;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .arrow,
+  a:hover > .arrow,
+  button:hover > .arrow {
+    transform: translateX(3px);
+  }
+}
+
+/* ============================================================
+   Materiais e profundidade
+   ============================================================ */
+.material {
+  background: rgba(238, 234, 226, 0.68);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 24px 60px -32px rgba(10, 10, 10, 0.26);
+}
+
+.material-chrome {
+  background: rgba(243, 240, 233, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+/* Em vez de um traço de 1px sob o header fixo: uma aresta que se desvanece,
+   presente apenas onde a chrome flutuante cobre o conteúdo. */
+.scroll-edge::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 28px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(243, 240, 233, 0.9), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-hover) ease;
+}
+
+.scroll-edge[data-scrolled="true"]::after {
+  opacity: 1;
+}
+
+/* Vibrância: sobre material translúcido o texto ganha peso e tracking. */
+.vibrant {
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: rgba(10, 10, 10, 0.92);
 }
 
 /* ---------- Focus ring (WCAG) ---------- */
@@ -157,17 +329,49 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
 }
 
-/* ---------- Reduced motion ---------- */
+/* ============================================================
+   Acessibilidade
+   Reduced motion = movimento mais suave, não ausência de feedback.
+   Mantém-se opacidade e cor; elimina-se deslocação.
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    /* Sem movimento… */
+    transition-property: opacity, color, background-color, border-color, fill, stroke,
+      box-shadow !important;
+    /* …mas o feedback de estado continua a existir. */
+    transition-duration: 200ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .pressable:active {
+    transform: none;
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .material,
+  .material-chrome {
+    background: var(--color-bone-2);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .material,
+  .material-chrome {
+    background: var(--color-paper);
+    border-color: var(--color-ink);
   }
 }
 
